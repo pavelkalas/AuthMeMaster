@@ -9,8 +9,14 @@ import org.bukkit.event.player.PlayerQuitEvent;
 /**
  * Player connexion listener class (joining/quitting)
  */
-public class ConnectionListener extends PlayerListener implements Listener {
+public class ConnectionListener implements Listener {
 
+	private PlayerListener playerListener;
+	
+	public ConnectionListener(PlayerListener playerListener) {
+		this.playerListener = playerListener;
+	}
+	
 	/**
 	 * On player join
 	 * 
@@ -22,8 +28,12 @@ public class ConnectionListener extends PlayerListener implements Listener {
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
 		
-		if (!unloggedPlayers.contains(player)) {
-			unloggedPlayers.add(player);
+		if (player == null) {
+			return;
+		}
+		
+		if (!playerListener.unloggedPlayers.contains(player)) {
+			playerListener.unloggedPlayers.add(player);
 		}
 	}
 
@@ -38,8 +48,12 @@ public class ConnectionListener extends PlayerListener implements Listener {
 	public void onPlayerQuit(PlayerQuitEvent event) {
 		Player player = event.getPlayer();
 		
-		if (unloggedPlayers.contains(player)) {
-			unloggedPlayers.remove(player);
+		if (player == null) {
+			return;
+		}
+		
+		if (playerListener.unloggedPlayers.contains(player)) {
+			playerListener.unloggedPlayers.remove(player);
 		}
 	}
 }
