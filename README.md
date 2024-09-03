@@ -17,7 +17,7 @@
 ## Installation
 
 1. **Download the Plugin**:
-   - Download the latest version of the plugin JAR file from the [releases page](https://github.com/yourusername/AuthMeMaster/releases).
+   - Download the latest version of the plugin JAR file from the [releases page](https://github.com/pavelkalas/AuthMeMaster/releases).
 
 2. **Add to Server**:
    - Place the downloaded JAR file into the `plugins` folder of your Spigot server.
