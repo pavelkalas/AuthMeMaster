@@ -9,10 +9,23 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
+/**
+ * Player listener class (move, etc..)
+ */
 public class PlayerListener implements Listener {
 	
+	/**
+	 * List of un authed players with data structure of Player instance
+	 */
 	public List<Player> unloggedPlayers = new ArrayList<Player>();
 
+	/**
+	 * On player move.
+	 * 
+	 * This function is called when player do move like, x, y, z, pitch or yaw
+	 * 
+	 * @param event PlayerMoveEvent instance
+	 */
 	@EventHandler
 	public void onMove(PlayerMoveEvent event) {
 		Player player = event.getPlayer();

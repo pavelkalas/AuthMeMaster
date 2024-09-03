@@ -7,8 +7,14 @@ import org.bukkit.entity.Player;
 
 import cz.pavelkalas.database.SqlConnection;
 
+/**
+ * Logging chat commands class
+ */
 public class ChatListener extends PlayerListener implements CommandExecutor {
 
+	/**
+	 * Instance for sql connexion.
+	 */
     private SqlConnection sqlConn;
 
     public ChatListener() {
@@ -16,11 +22,17 @@ public class ChatListener extends PlayerListener implements CommandExecutor {
         this.sqlConn.connect();
     }
 
+    /**
+     * Then player execute commands starts with "/" slash, this function is being executed.
+     */
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
 
+            //
+            // REQUIRED INPUT:    /login  <your password>
+            //
             if (label.equalsIgnoreCase("login")) {
                 if (args.length == 1) {
                     String password = args[0];
@@ -41,7 +53,10 @@ public class ChatListener extends PlayerListener implements CommandExecutor {
                 }
             }
 
-            if (label.equalsIgnoreCase("register")) {
+            //
+            // REQUIRED INPUT:    /register  <password>   <password again>
+            //
+            else if (label.equalsIgnoreCase("register")) {
                 if (args.length == 2) {
                     String password = args[0];
                     String passwordAgain = args[1];

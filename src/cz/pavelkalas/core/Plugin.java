@@ -6,8 +6,14 @@ import cz.pavelkalas.listeners.ChatListener;
 import cz.pavelkalas.listeners.ConnectionListener;
 import cz.pavelkalas.listeners.PlayerListener;
 
+/**
+ * Main classfile for plugin entry.
+ */
 public class Plugin extends JavaPlugin {
 
+	/**
+	 * Function executed at plugin load.
+	 */
 	@Override
 	public void onEnable() {
 		this.getServer().getPluginManager().registerEvents(new ConnectionListener(), this);
@@ -17,6 +23,9 @@ public class Plugin extends JavaPlugin {
         this.getCommand("register").setExecutor(new ChatListener());
 	}
 
+	/**
+	 * Function executed at plugin unload (while stopping or reloading server)
+	 */
 	@Override
 	public void onDisable() {
 	}

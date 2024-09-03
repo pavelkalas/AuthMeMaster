@@ -9,14 +9,27 @@ import java.sql.Statement;
 
 import org.bukkit.entity.Player;
 
+/**
+ * SQL management class for checking passwords of user, registering users or check the existency.
+ */
 public class SqlConnection {
 
+	/**
+	 * Instance of sql connexion.
+	 */
     private Connection conn = null;
+    
+    /**
+     * Instance of sql statements.
+     */
     private Statement stmt = null;
 
     public SqlConnection() {
     }
 
+    /**
+     * Creates and opens sql connection.
+     */
     public void connect() {
         try {
             Class.forName("org.sqlite.JDBC");
@@ -39,6 +52,13 @@ public class SqlConnection {
         }
     }
 
+    /**
+     * Inserts new registered player information into sql.
+     * 
+     * @param player - Player instance
+     * @param inputedPassword - Player's inputed password
+     * @return Returns TRUE if is registration SUCCESS.
+     */
     public boolean registerUser(Player player, String inputedPassword) {
         if (userExists(player)) {
             return false;
@@ -60,6 +80,12 @@ public class SqlConnection {
         return false;
     }
 
+    /**
+     * Checks if player already exists in database (by name)
+     * 
+     * @param player - Player instance
+     * @return Returns TRUE if player is already presented in database.
+     */
     public boolean userExists(Player player) {
         String sql = "SELECT COUNT(*) FROM players WHERE name = ?;";
 
@@ -79,6 +105,13 @@ public class SqlConnection {
         return false;
     }
 
+    /**
+     * Compares a player inputed password with a database saved pasword.
+     * 
+     * @param player - Player instance
+     * @param inputedPassword - Player's inputed password.
+     * @return Returns TRUE if password matches by player name.
+     */
     public boolean matchPassword(Player player, String inputedPassword) {
         String sql = "SELECT password FROM players WHERE name = ?;";
 
@@ -98,6 +131,9 @@ public class SqlConnection {
         return false;
     }
 
+    /**
+     * Closes the database connection.
+     */
     public void close() {
         try {
             if (stmt != null) stmt.close();
