@@ -28,8 +28,8 @@ public class ChatListener extends PlayerListener implements CommandExecutor {
                     if (sqlConn.matchPassword(player, password)) {
                         player.sendMessage("Logged in!");
                         
-                        if (unloggedPlayers.contains(player)) {
-                        	unloggedPlayers.remove(player);
+                        if (unloggedPlayers.contains(player.getName())) {
+                        	unloggedPlayers.remove(player.getName());
                         }
                     } else {
                         player.sendMessage("Invalid password!");

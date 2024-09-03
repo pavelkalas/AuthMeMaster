@@ -11,13 +11,13 @@ import org.bukkit.event.player.PlayerMoveEvent;
 
 public class PlayerListener implements Listener {
 	
-	public List<Player> unloggedPlayers = new ArrayList<Player>();
+	public List<String> unloggedPlayers = new ArrayList<String>();
 
 	@EventHandler
 	public void onMove(PlayerMoveEvent event) {
 		Player player = event.getPlayer();
 		
-		if (unloggedPlayers.contains(player)) {
+		if (unloggedPlayers.contains(player.getName())) {
 			Location location = player.getLocation();
 			location.setYaw(0.0f);
 			location.setPitch(0.0f);
