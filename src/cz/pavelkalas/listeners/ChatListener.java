@@ -1,5 +1,7 @@
 package cz.pavelkalas.listeners;
 
+import java.sql.SQLException;
+
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -81,7 +83,10 @@ public class ChatListener extends PlayerListener implements CommandExecutor {
         return false;
     }
 
-    public void closeConnection() {
+    /**
+     * Closes the database connection.
+     */
+    public void close() {
         sqlConn.close();
     }
 }
