@@ -1,7 +1,5 @@
 package cz.pavelkalas.listeners;
 
-import java.sql.SQLException;
-
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -12,16 +10,22 @@ import cz.pavelkalas.database.SqlConnection;
 /**
  * Logging chat commands class
  */
-public class ChatListener extends PlayerListener implements CommandExecutor {
+public class ChatListener implements CommandExecutor {
 
 	/**
 	 * Instance for sql connexion.
 	 */
     private SqlConnection sqlConn;
+    
+    /**
+     * Instance of player listener
+     */
+    private PlayerListener playerListener;
 
-    public ChatListener() {
+    public ChatListener(PlayerListener playerListener) {
         this.sqlConn = new SqlConnection();
         this.sqlConn.connect();
+        this.playerListener = playerListener;
     }
 
     /**
@@ -42,8 +46,8 @@ public class ChatListener extends PlayerListener implements CommandExecutor {
                     if (sqlConn.matchPassword(player, password)) {
                         player.sendMessage("Logged in!");
                         
-                        if (unloggedPlayers.contains(player)) {
-                        	unloggedPlayers.remove(player);
+                        if (playerListener.unloggedPlayers.contains(player)) {
+                        	playerListener.unloggedPlayers.remove(player);
                         }
                     } else {
                         player.sendMessage("Invalid password!");

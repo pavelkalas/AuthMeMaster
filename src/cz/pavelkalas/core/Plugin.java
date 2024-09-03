@@ -11,16 +11,18 @@ import cz.pavelkalas.listeners.PlayerListener;
  */
 public class Plugin extends JavaPlugin {
 
+	PlayerListener playerListener = new PlayerListener();
+	
 	/**
 	 * Function executed at plugin load.
 	 */
 	@Override
 	public void onEnable() {
-		this.getServer().getPluginManager().registerEvents(new ConnectionListener(), this);
-		this.getServer().getPluginManager().registerEvents(new PlayerListener(), this);
+		this.getServer().getPluginManager().registerEvents(new ConnectionListener(playerListener), this);
+		this.getServer().getPluginManager().registerEvents(playerListener, this);
 		
-		this.getCommand("login").setExecutor(new ChatListener());
-        this.getCommand("register").setExecutor(new ChatListener());
+		this.getCommand("login").setExecutor(new ChatListener(playerListener));
+        this.getCommand("register").setExecutor(new ChatListener(playerListener));
 	}
 
 	/**

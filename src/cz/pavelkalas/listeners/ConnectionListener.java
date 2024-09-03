@@ -11,6 +11,9 @@ import org.bukkit.event.player.PlayerQuitEvent;
  */
 public class ConnectionListener implements Listener {
 
+	/**
+	 * Instance of player listener.
+	 */
 	private PlayerListener playerListener;
 	
 	public ConnectionListener(PlayerListener playerListener) {
