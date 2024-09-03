@@ -33,7 +33,7 @@ public class SqlConnection {
     public void connect() {
         try {
             Class.forName("org.sqlite.JDBC");
-            String url = "jdbc:sqlite:sample.db";
+            String url = "jdbc:sqlite:authmemaster_database.db";
             conn = DriverManager.getConnection(url);
 
             System.out.println("Connection to SQLite has been established.");
