@@ -42,52 +42,64 @@ public class ChatListener implements CommandExecutor {
             // REQUIRED INPUT:    /login  <your password>
             //
             if (label.equalsIgnoreCase("login")) {
-                if (args.length == 1) {
-                    String password = CryptographyStrategy.getSHA512FromString(args[0].trim());
-                    
-                    if (password != null) {
-                    	if (sqlConn.matchPassword(player, password)) {
-                        	Messager.sendMessage(player, "Successfully logged in!");
+                if (sqlConn.userExists(player)) {
+                	if (playerListener.unloggedPlayers.contains(player)) {
+                		if (args.length == 1) {
+                            String password = CryptographyStrategy.getSHA512FromString(args[0].trim());
                             
-                            if (playerListener.unloggedPlayers.contains(player)) {
-                            	playerListener.unloggedPlayers.remove(player);
+                            if (password != null) {
+                            	if (sqlConn.matchPassword(player, password)) {
+                                	Messager.sendMessage(player, "Successfully logged in!");
+                                    
+                                    if (playerListener.unloggedPlayers.contains(player)) {
+                                    	playerListener.unloggedPlayers.remove(player);
+                                    }
+                                } else {
+                                	Messager.sendMessage(player, "Invalid password! Try it again.");
+                                }
+                            } else {
+                            	Messager.sendMessage(player, "Usage: /login <your password>");
                             }
                         } else {
-                        	Messager.sendMessage(player, "Invalid password! Try it again.");
+                        	Messager.sendMessage(player, "Usage: /login <your password>");
                         }
-                    } else {
-                    	Messager.sendMessage(player, "Usage: /login <your password>");
-                    }
-                    
-                    return true;
+                	} else {
+                		Messager.sendMessage(player, "You are already logged in!");
+                	}
                 } else {
-                	Messager.sendMessage(player, "Usage: /login <your password>");
-                    return false;
+                	Messager.sendMessage(player, "You are not registered yet! Please, use /register <your password> <your password again>");
                 }
+                
+                return true;
             }
 
             //
             // REQUIRED INPUT:    /register  <password>   <password again>
             //
             else if (label.equalsIgnoreCase("register")) {
-                if (args.length == 2) {
-                    String password = args[0];
-                    String passwordAgain = args[1];
-                    
-                    if (password.equals(passwordAgain)) {
-                        if (sqlConn.registerUser(player, CryptographyStrategy.getSHA512FromString(password.trim()))) {
-                        	Messager.sendMessage(player, "Registration was successfull! Now login by command /login <your password>");
+                if (!sqlConn.userExists(player)) {
+                	if (args.length == 2) {
+                        String password = args[0];
+                        String passwordAgain = args[1];
+                        
+                        if (password.equals(passwordAgain)) {
+                            if (sqlConn.registerUser(player, CryptographyStrategy.getSHA512FromString(password.trim()))) {
+                            	Messager.sendMessage(player, "Registration was successfull! Now login by command /login <your password>");
+                            } else {
+                            	Messager.sendMessage(player, "Registration failed, try rejoin server and try it again!");
+                            }
                         } else {
-                        	Messager.sendMessage(player, "Registration failed, try rejoin server and try it again!");
+                        	Messager.sendMessage(player, "Passwords do not match!");
                         }
+                        return true;
                     } else {
-                    	Messager.sendMessage(player, "Passwords do not match!");
+                    	Messager.sendMessage(player, "Usage: /register <your password> <your password again>");
                     }
-                    return true;
                 } else {
-                	Messager.sendMessage(player, "/register <password> <password again>");
-                    return false;
+                	Messager.sendMessage(player, "You are already registered, please, use /login <your password> command!");
                 }
+                
+                return true;
             }
         }
 

@@ -55,7 +55,7 @@ public class ConnectionListener extends SqlConnection implements Listener {
 			public void run() {
 				for (int i = 0; i < 3; i++) {
 					
-					if (!player.isOnline()) {
+					if (!player.isOnline() || !playerListener.unloggedPlayers.contains(player)) {
 						break;
 					}
 					
