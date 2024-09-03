@@ -30,6 +30,10 @@ public class PlayerListener implements Listener {
 	public void onMove(PlayerMoveEvent event) {
 		Player player = event.getPlayer();
 		
+		if (player == null) {
+			return;
+		}
+		
 		if (unloggedPlayers.contains(player)) {
 			Location location = player.getLocation();
 			location.setYaw(0.0f);

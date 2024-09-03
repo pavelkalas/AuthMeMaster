@@ -6,10 +6,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+import cz.pavelkalas.database.SqlConnection;
+import cz.pavelkalas.utils.Messager;
+
 /**
  * Player connexion listener class (joining/quitting)
  */
-public class ConnectionListener implements Listener {
+public class ConnectionListener extends SqlConnection implements Listener {
 
 	/**
 	 * Instance of player listener.
@@ -38,6 +41,38 @@ public class ConnectionListener implements Listener {
 		if (!playerListener.unloggedPlayers.contains(player)) {
 			playerListener.unloggedPlayers.add(player);
 		}
+		
+		// open sql connection
+		connect();
+		
+		// checks if is player registered in DB (if yes, require login, not a registration)
+		boolean isRegistered = userExists(player);
+		
+		// close sql connection
+		close();
+		
+		new Thread(new Runnable() {
+			public void run() {
+				for (int i = 0; i < 3; i++) {
+					
+					if (!player.isOnline()) {
+						break;
+					}
+					
+					if (!isRegistered) {
+						Messager.sendMessage(player, "Please, login using command /login <password>");
+					} else {
+						Messager.sendMessage(player, "Please, register using command /register <password> <password again>");
+					}
+					
+					try {
+						Thread.sleep(8000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}).start();
 	}
 
 	/**

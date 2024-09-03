@@ -6,6 +6,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import cz.pavelkalas.database.SqlConnection;
+import cz.pavelkalas.utils.Messager;
 
 /**
  * Logging chat commands class
@@ -44,17 +45,17 @@ public class ChatListener implements CommandExecutor {
                     String password = args[0];
                     
                     if (sqlConn.matchPassword(player, password)) {
-                        player.sendMessage("Logged in!");
+                    	Messager.sendMessage(player, "Successfully logged in!");
                         
                         if (playerListener.unloggedPlayers.contains(player)) {
                         	playerListener.unloggedPlayers.remove(player);
                         }
                     } else {
-                        player.sendMessage("Invalid password!");
+                    	Messager.sendMessage(player, "Invalid password! Try it again.");
                     }
                     return true;
                 } else {
-                    player.sendMessage("Usage: /login <password>");
+                	Messager.sendMessage(player, "Usage: /login <your password>");
                     return false;
                 }
             }
@@ -69,16 +70,16 @@ public class ChatListener implements CommandExecutor {
                     
                     if (password.equals(passwordAgain)) {
                         if (sqlConn.registerUser(player, password)) {
-                            player.sendMessage("Registration successful!");
+                        	Messager.sendMessage(player, "Registration was successfull! Now login by command /login <your password>");
                         } else {
-                            player.sendMessage("Registration failed.");
+                        	Messager.sendMessage(player, "Registration failed, try rejoin server and try it again!");
                         }
                     } else {
-                        player.sendMessage("Passwords do not match.");
+                    	Messager.sendMessage(player, "Passwords do not match!");
                     }
                     return true;
                 } else {
-                    player.sendMessage("Usage: /register <password> <password again>");
+                	Messager.sendMessage(player, "/register <password> <password again>");
                     return false;
                 }
             }

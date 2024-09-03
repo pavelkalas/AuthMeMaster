@@ -16,6 +16,6 @@ public class Messager {
 	 * @param message - Message content
 	 */
 	public static void sendMessage(Player player, String message) {
-		player.sendMessage(ChatColor.RED + "Auth" + ChatColor.GOLD+ "Me" + ChatColor.YELLOW +"Master" + ChatColor.WHITE + " >> " + message);
+		player.sendMessage((ChatColor.RED + "" + ChatColor.BOLD + "Auth" + ChatColor.GOLD + ChatColor.BOLD + "Me" + ChatColor.YELLOW + ChatColor.BOLD + "Master" + ChatColor.WHITE) + " >> " + message);
 	}
 }
