@@ -10,7 +10,7 @@ public class ConnectionListener extends PlayerListener implements Listener {
 
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event) {
-		String player = event.getPlayer().getName();
+		Player player = event.getPlayer();
 		
 		if (!unloggedPlayers.contains(player)) {
 			unloggedPlayers.add(player);
@@ -19,7 +19,7 @@ public class ConnectionListener extends PlayerListener implements Listener {
 
 	@EventHandler
 	public void onPlayerQuit(PlayerQuitEvent event) {
-		String player = event.getPlayer().getName();
+		Player player = event.getPlayer();
 		
 		if (unloggedPlayers.contains(player)) {
 			unloggedPlayers.remove(player);
