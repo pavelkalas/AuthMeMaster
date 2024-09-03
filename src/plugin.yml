@@ -1,0 +1,12 @@
+name: AuthMeMaster
+version: 1.0
+main: cz.pavelkalas.core.Plugin
+
+commands:
+   login:
+      description: Log in with your password
+      usage: /login <password>
+
+   register:
+      description: Register a new account
+      usage: /register <password> <password again>
