@@ -6,6 +6,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import cz.pavelkalas.database.SqlConnection;
+import cz.pavelkalas.utils.CryptographyStrategy;
 import cz.pavelkalas.utils.Messager;
 
 /**
@@ -42,17 +43,22 @@ public class ChatListener implements CommandExecutor {
             //
             if (label.equalsIgnoreCase("login")) {
                 if (args.length == 1) {
-                    String password = args[0];
+                    String password = CryptographyStrategy.getSHA512FromString(args[0].trim());
                     
-                    if (sqlConn.matchPassword(player, password)) {
-                    	Messager.sendMessage(player, "Successfully logged in!");
-                        
-                        if (playerListener.unloggedPlayers.contains(player)) {
-                        	playerListener.unloggedPlayers.remove(player);
+                    if (password != null) {
+                    	if (sqlConn.matchPassword(player, password)) {
+                        	Messager.sendMessage(player, "Successfully logged in!");
+                            
+                            if (playerListener.unloggedPlayers.contains(player)) {
+                            	playerListener.unloggedPlayers.remove(player);
+                            }
+                        } else {
+                        	Messager.sendMessage(player, "Invalid password! Try it again.");
                         }
                     } else {
-                    	Messager.sendMessage(player, "Invalid password! Try it again.");
+                    	Messager.sendMessage(player, "Usage: /login <your password>");
                     }
+                    
                     return true;
                 } else {
                 	Messager.sendMessage(player, "Usage: /login <your password>");
@@ -69,7 +75,7 @@ public class ChatListener implements CommandExecutor {
                     String passwordAgain = args[1];
                     
                     if (password.equals(passwordAgain)) {
-                        if (sqlConn.registerUser(player, password)) {
+                        if (sqlConn.registerUser(player, CryptographyStrategy.getSHA512FromString(password.trim()))) {
                         	Messager.sendMessage(player, "Registration was successfull! Now login by command /login <your password>");
                         } else {
                         	Messager.sendMessage(player, "Registration failed, try rejoin server and try it again!");
