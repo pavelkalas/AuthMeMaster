@@ -59,7 +59,7 @@ public class ConnectionListener extends SqlConnection implements Listener {
 						break;
 					}
 					
-					if (!isRegistered) {
+					if (isRegistered) {
 						Messager.sendMessage(player, "Please, login using command /login <password>");
 					} else {
 						Messager.sendMessage(player, "Please, register using command /register <password> <password again>");
