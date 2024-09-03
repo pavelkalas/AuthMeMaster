@@ -14,17 +14,6 @@
 - **Spigot**: Compatible with the Spigot API
 - **SQLite JDBC Driver**: Make sure to include the SQLite JDBC driver in your project.
 
-## Installation
-
-1. **Download the Plugin**:
-   - Download the latest version of the plugin JAR file from the [releases page](https://github.com/yourusername/AuthMeMaster/releases).
-
-2. **Add to Server**:
-   - Place the downloaded JAR file into the `plugins` folder of your Spigot server.
-
-3. **Start Your Server**:
-   - Restart your Spigot server to load the plugin.
-
 ## Configuration
 
 The plugin uses an SQLite database named `sample.db` by default. You can customize the database file name by modifying the plugin’s source code if needed.
